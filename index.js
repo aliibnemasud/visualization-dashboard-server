@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 })
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://visualization-ashboard:CI1nunRmFEiE6B64@visualization-dashboard.aatcaul.mongodb.net/?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.DB_USER_NAME }:${process.env.DB_PASS}@visualization-dashboard.aatcaul.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 
@@ -21,10 +21,8 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 const run = async () => {
     
     try {
-
         await client.connect();
         const businessDataCollection = client.db('visualization-dashboard').collection('businessdata');
-
          // Load all data
 
          app.get('/businessdata', async (req, res) => {                        
