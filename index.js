@@ -15,9 +15,6 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER_NAME }:${process.env.DB_PASS}@visualization-dashboard.aatcaul.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
-
-
-
 const run = async () => {
     
     try {
@@ -40,8 +37,6 @@ const run = async () => {
 }
 
 run().catch(console.dir);
-
-
 
 app.listen(port, () => {
     console.log(`visualization Dashboard listening on port ${port}`)
