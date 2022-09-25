@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const port = process.env.PORT || 5000;
 const cors = require('cors');
 
@@ -11,7 +12,7 @@ app.get('/', (req, res) => {
     res.send('visualization Dashboard Server is Running......')
 })
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+
 const uri = `mongodb+srv://${process.env.DB_USER_NAME}:${process.env.DB_PASS}@visualization-dashboard.aatcaul.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
@@ -89,6 +90,14 @@ const run = async () => {
             const user = await allUsersCollection.findOne({ email: email });
             const isAdmin = user.role === 'admin';
             res.send({ admin: isAdmin });
+        })
+
+        // delete data
+        app.delete('/formdata/:id', async(req, res)=> {            
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await formCollection.deleteOne(query);
+            res.send(result);
         })
 
 
