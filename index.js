@@ -52,6 +52,15 @@ const run = async () => {
             res.send(data)
         })
 
+        // AllUser load to check admin
+
+        app.get('/alluser', async (req, res) => {
+            const query = {};
+            const cursor = allUsersCollection.find(query);
+            const data = await cursor.toArray();
+            res.send(data)
+        })
+
         // Form Data
 
         app.get('/formdata', async (req, res) => {
@@ -89,6 +98,7 @@ const run = async () => {
             const email = req.params.email;
             const user = await allUsersCollection.findOne({ email: email });
             const isAdmin = user.role === 'admin';
+            console.log(isAdmin)
             res.send({ admin: isAdmin });
         })
 
